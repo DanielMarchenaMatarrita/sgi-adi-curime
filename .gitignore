@@ -87,3 +87,6 @@ compose.override.yaml
 **/.agents/
 **/.claude/
 **/.windsurf/
+
+# Local design exports
+stitch_dise_o_ux_ui_sgi_curime/

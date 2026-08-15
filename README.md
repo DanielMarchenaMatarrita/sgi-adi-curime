@@ -66,3 +66,7 @@ SGI-Curime se divide inicialmente en dos aplicaciones:
 - `backend/`: API desarrollada con NestJS.
 
 La base de datos PostgreSQL será utilizada por el backend mediante Prisma.
+
+## Documentacion del avance
+
+- [Fundacion integrada del frontend](docs/frontend-foundation-progress.md): alcance implementado, rutas, configuracion, verificaciones, limitaciones y siguientes fases.
