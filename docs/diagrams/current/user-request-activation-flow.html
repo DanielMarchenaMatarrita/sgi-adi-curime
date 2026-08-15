@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solicitud y activación de usuario en SGI-Curime</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --paper: #f5f5f5;
+      --ink: #2d3142;
+      --muted: #4f5d75;
+      --soft: #7a8399;
+      --accent: #eb6c36;
+      --font-sans: 'Geist', system-ui, sans-serif;
+      --font-serif: 'Instrument Serif', serif;
+      --font-mono: 'Geist Mono', ui-monospace, monospace;
+    }
+
+    body {
+      min-height: 100vh;
+      padding: 40px;
+      overflow-x: auto;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-sans);
+    }
+
+    main { width: min(1280px, 100%); margin: 0 auto; }
+
+    .eyebrow {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+      font-family: var(--font-serif);
+      font-size: 40px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      margin-bottom: 24px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .diagram { width: 100%; min-width: 960px; display: block; }
+
+    .notes {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(45, 49, 66, 0.12);
+    }
+
+    .notes h2 {
+      margin-bottom: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .notes p, .notes li { color: var(--muted); font-size: 14px; line-height: 1.5; }
+    .notes ul { padding-left: 20px; }
+    code { font-family: var(--font-mono); font-size: 0.92em; }
+
+    footer {
+      margin-top: 20px;
+      color: var(--soft);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    @media (max-width: 720px) {
+      body { padding: 24px 16px; }
+      h1 { font-size: 32px; }
+      .notes { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Proceso · Estado actual · Estilo provisional</p>
+    <h1>Solicitud y activación de usuario</h1>
+    <p class="subtitle">Responsabilidades, decisiones y brecha de entrega del token al 13 de agosto de 2026.</p>
+
+    <svg class="diagram" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="user-activation-title user-activation-desc">
+      <title id="user-activation-title">Solicitud y activación de usuario en SGI-Curime</title>
+      <desc id="user-activation-desc">Proceso por responsables desde la solicitud pública hasta la activación de una cuenta, con rutas de duplicado y rechazo, creación transaccional de usuario y token, y una brecha actual porque la entrega del token no está implementada.</desc>
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/>
+        </marker>
+        <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/>
+        </marker>
+        <marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#2e5aa8"/>
+        </marker>
+      </defs>
+
+      <rect width="1280" height="720" fill="#f5f5f5"/>
+
+      <!-- Lane structure. -->
+      <rect x="160" y="64" width="1080" height="160" fill="rgba(45,49,66,0.018)"/>
+      <rect x="160" y="384" width="1080" height="160" fill="rgba(45,49,66,0.018)"/>
+      <line x1="160" y1="64" x2="1240" y2="64" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <line x1="160" y1="224" x2="1240" y2="224" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <line x1="160" y1="384" x2="1240" y2="384" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <line x1="160" y1="544" x2="1240" y2="544" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <line x1="160" y1="64" x2="160" y2="544" stroke="rgba(45,49,66,0.20)" stroke-width="1"/>
+      <text x="80" y="148" fill="#4f5d75" font-size="12" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">SOLICITANTE</text>
+      <text x="80" y="308" fill="#4f5d75" font-size="12" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">SISTEMA</text>
+      <text x="80" y="468" fill="#4f5d75" font-size="12" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ADMINISTRADOR</text>
+
+      <!-- Connectors before nodes. -->
+      <path d="M 288 144 H 380 Q 388 144 388 152 V 256" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <line x1="448" y1="304" x2="480" y2="304" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <path d="M 600 304 H 692 Q 700 304 700 312 V 416" fill="none" stroke="#eb6c36" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+      <path d="M 760 464 H 836 Q 844 464 844 456 V 352" fill="none" stroke="#eb6c36" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+      <line x1="904" y1="304" x2="936" y2="304" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- Rejection branch. -->
+      <line x1="688" y1="416" x2="688" y2="352" stroke="#4f5d75" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <rect x="700" y="372" width="48" height="16" rx="2" fill="#f5f5f5"/>
+      <text x="724" y="384" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">RECHAZA</text>
+
+      <!-- Missing delivery handoff and independently available activation endpoint. -->
+      <path d="M 1056 256 V 184 Q 1056 176 1064 176 H 1080" fill="none" stroke="#4f5d75" stroke-width="1" stroke-dasharray="4,3"/>
+      <line x1="1072" y1="168" x2="1088" y2="184" stroke="#eb6c36" stroke-width="1.2"/>
+      <line x1="1088" y1="168" x2="1072" y2="184" stroke="#eb6c36" stroke-width="1.2"/>
+      <rect x="940" y="196" width="160" height="16" rx="2" fill="#f5f5f5"/>
+      <text x="1020" y="208" fill="#eb6c36" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">ENTREGA NO IMPLEMENTADA</text>
+
+      <path d="M 1124 192 V 256" fill="none" stroke="#2e5aa8" stroke-width="1.2" marker-end="url(#arrow-link)"/>
+      <rect x="1128" y="212" width="72" height="16" rx="2" fill="#f5f5f5"/>
+      <text x="1164" y="224" fill="#2e5aa8" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">SI HAY TOKEN</text>
+      <line x1="1168" y1="304" x2="1200" y2="304" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- Duplicate terminal branch. -->
+      <path d="M 388 256 V 192" fill="none" stroke="#4f5d75" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <rect x="396" y="212" width="72" height="16" rx="2" fill="#f5f5f5"/>
+      <text x="432" y="224" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">DUPLICADA</text>
+
+      <!-- Nodes. -->
+      <rect x="176" y="96" width="112" height="96" rx="6" fill="#ffffff" stroke="rgba(45,49,66,0.25)" stroke-width="1"/>
+      <rect x="184" y="104" width="32" height="16" rx="2" fill="rgba(45,49,66,0.12)"/>
+      <text x="200" y="116" fill="#2d3142" font-size="8" font-weight="600" font-family="'Geist Mono', monospace" text-anchor="middle">SOL</text>
+      <text x="232" y="144" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Enviar solicitud</text>
+      <text x="232" y="168" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">POST /user-requests</text>
+
+      <rect x="328" y="256" width="120" height="96" rx="6" fill="#ffffff" stroke="rgba(45,49,66,0.25)" stroke-width="1"/>
+      <rect x="336" y="264" width="32" height="16" rx="2" fill="rgba(45,49,66,0.12)"/>
+      <text x="352" y="276" fill="#2d3142" font-size="8" font-weight="600" font-family="'Geist Mono', monospace" text-anchor="middle">SYS</text>
+      <text x="388" y="304" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Validar duplicados</text>
+      <text x="388" y="328" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">email · identificación</text>
+
+      <rect x="328" y="96" width="120" height="96" rx="6" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.20)" stroke-width="1" stroke-dasharray="4,3"/>
+      <rect x="336" y="104" width="32" height="16" rx="2" fill="rgba(45,49,66,0.12)"/>
+      <text x="352" y="116" fill="#2d3142" font-size="8" font-weight="600" font-family="'Geist Mono', monospace" text-anchor="middle">FIN</text>
+      <text x="388" y="144" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Conflicto</text>
+      <text x="388" y="168" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">no crea solicitud</text>
+
+      <rect x="480" y="256" width="120" height="96" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+      <rect x="488" y="264" width="32" height="16" rx="2" fill="rgba(45,49,66,0.12)"/>
+      <text x="504" y="276" fill="#2d3142" font-size="8" font-weight="600" font-family="'Geist Mono', monospace" text-anchor="middle">SYS</text>
+      <text x="540" y="304" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Guardar solicitud</text>
+      <text x="540" y="328" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">estado PENDING</text>
+
+      <rect x="640" y="416" width="120" height="96" rx="6" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1.2"/>
+      <rect x="648" y="424" width="32" height="16" rx="2" fill="rgba(235,108,54,0.20)"/>
+      <text x="664" y="436" fill="#eb6c36" font-size="8" font-weight="600" font-family="'Geist Mono', monospace" text-anchor="middle">ADM</text>
+      <text x="700" y="464" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Revisar solicitud</text>
+      <text x="700" y="488" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">rol Administrador</text>
+
+      <rect x="624" y="256" width="128" height="96" rx="6" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.20)" stroke-width="1" stroke-dasharray="4,3"/>
+      <rect x="632" y="264" width="32" height="16" rx="2" fill="rgba(45,49,66,0.12)"/>
+      <text x="648" y="276" fill="#2d3142" font-size="8" font-weight="600" font-family="'Geist Mono', monospace" text-anchor="middle">FIN</text>
+      <text x="688" y="304" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Marcar REJECTED</text>
+      <text x="688" y="328" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">motivo + reviewer id</text>
+
+      <rect x="784" y="256" width="120" height="96" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <rect x="792" y="264" width="32" height="16" rx="2" fill="rgba(45,49,66,0.12)"/>
+      <text x="808" y="276" fill="#2d3142" font-size="8" font-weight="600" font-family="'Geist Mono', monospace" text-anchor="middle">SYS</text>
+      <text x="844" y="300" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Aprobar</text>
+      <text x="844" y="320" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">transaccionalmente</text>
+      <text x="844" y="340" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">APPROVED · INACTIVE · hash</text>
+
+      <rect x="936" y="256" width="120" height="96" rx="6" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.20)" stroke-width="1" stroke-dasharray="4,3"/>
+      <rect x="944" y="264" width="32" height="16" rx="2" fill="rgba(45,49,66,0.12)"/>
+      <text x="960" y="276" fill="#2d3142" font-size="8" font-weight="600" font-family="'Geist Mono', monospace" text-anchor="middle">STUB</text>
+      <text x="996" y="304" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Entregar token</text>
+      <text x="996" y="328" fill="#eb6c36" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">sin proveedor actual</text>
+
+      <rect x="1080" y="96" width="120" height="96" rx="6" fill="#ffffff" stroke="#2e5aa8" stroke-width="1"/>
+      <rect x="1088" y="104" width="32" height="16" rx="2" fill="rgba(46,90,168,0.12)"/>
+      <text x="1104" y="116" fill="#2e5aa8" font-size="8" font-weight="600" font-family="'Geist Mono', monospace" text-anchor="middle">SOL</text>
+      <text x="1140" y="144" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Enviar token</text>
+      <text x="1140" y="168" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">y nueva contraseña</text>
+
+      <rect x="1080" y="256" width="88" height="96" rx="6" fill="#ffffff" stroke="#2e5aa8" stroke-width="1"/>
+      <rect x="1088" y="264" width="32" height="16" rx="2" fill="rgba(46,90,168,0.12)"/>
+      <text x="1104" y="276" fill="#2e5aa8" font-size="8" font-weight="600" font-family="'Geist Mono', monospace" text-anchor="middle">SYS</text>
+      <text x="1124" y="304" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Activar</text>
+      <text x="1124" y="328" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">validar + consumir</text>
+
+      <rect x="1200" y="256" width="40" height="96" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+      <text x="1220" y="296" fill="#2d3142" font-size="8" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">USER</text>
+      <text x="1220" y="316" fill="#2d3142" font-size="8" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">ACTIVE</text>
+
+      <!-- Legend strip. -->
+      <line x1="40" y1="608" x2="1240" y2="608" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="40" y="640" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">LEYENDA</text>
+      <line x1="160" y1="636" x2="200" y2="636" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <text x="216" y="640" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif">Flujo implementado</text>
+      <line x1="376" y1="636" x2="416" y2="636" stroke="#4f5d75" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <text x="432" y="640" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif">Rama alternativa</text>
+      <rect x="584" y="628" width="16" height="16" rx="4" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="0.8"/>
+      <text x="612" y="640" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif">Decisión focal</text>
+      <line x1="836" y1="628" x2="852" y2="644" stroke="#eb6c36" stroke-width="1.2"/>
+      <line x1="852" y1="628" x2="836" y2="644" stroke="#eb6c36" stroke-width="1.2"/>
+      <text x="868" y="640" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif">Brecha de integración</text>
+    </svg>
+
+    <section class="notes" aria-label="Reglas y fuentes del proceso">
+      <div>
+        <h2>Reglas verificadas</h2>
+        <p>La solicitud empieza en <code>PENDING</code>. Solo un administrador puede aprobarla o rechazarla. Aprobar reclama la solicitud, crea un usuario <code>INACTIVE</code> y persiste el hash del token dentro de una transacción. Activar exige contraseñas coincidentes, token existente, no usado y vigente, y usuario todavía inactivo; luego consume el token y cambia el usuario a <code>ACTIVE</code> transaccionalmente.</p>
+        <p>Fuentes: <code>user-requests.service.ts</code>, <code>account-activation.service.ts</code>, sus pruebas unitarias y <code>activation-token-delivery.service.ts</code>.</p>
+      </div>
+      <div>
+        <h2>Brecha actual</h2>
+        <ul>
+          <li><code>deliver()</code> es un stub sin proveedor.</li>
+          <li>La aprobación no devuelve el token.</li>
+          <li>El endpoint de activación funciona solo si el cliente obtiene un token por otro medio.</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>Detalle: balanced · 11 nodos representados · Apariencia predeterminada temporal</footer>
+  </main>
+</body>
+</html>
