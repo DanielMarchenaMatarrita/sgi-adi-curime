@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Decisiones actuales de administración de cuentas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --paper: #f5f5f5;
+      --ink: #2d3142;
+      --muted: #4f5d75;
+      --soft: #7a8399;
+      --accent: #eb6c36;
+      --font-sans: 'Geist', system-ui, sans-serif;
+      --font-serif: 'Instrument Serif', serif;
+      --font-mono: 'Geist Mono', ui-monospace, monospace;
+    }
+
+    body {
+      min-height: 100vh;
+      padding: 40px;
+      overflow-x: auto;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-sans);
+    }
+
+    main { width: min(1280px, 100%); margin: 0 auto; }
+
+    .eyebrow {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+      font-family: var(--font-serif);
+      font-size: 40px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      margin-bottom: 24px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .diagram { width: 100%; min-width: 960px; display: block; }
+
+    .notes {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(45, 49, 66, 0.12);
+    }
+
+    .notes h2 {
+      margin-bottom: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .notes p, .notes li { color: var(--muted); font-size: 14px; line-height: 1.5; }
+    .notes ul { padding-left: 20px; }
+    code { font-family: var(--font-mono); font-size: 0.92em; }
+
+    footer {
+      margin-top: 20px;
+      color: var(--soft);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    @media (max-width: 720px) {
+      body { padding: 24px 16px; }
+      h1 { font-size: 32px; }
+      .notes { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Flowchart · Estado actual · Estilo provisional</p>
+    <h1>Decisiones al administrar cuentas</h1>
+    <p class="subtitle">Precondiciones y resultados de activar, desactivar y cambiar el rol de un usuario al 13 de agosto de 2026.</p>
+
+    <svg class="diagram" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="account-admin-decisions-title account-admin-decisions-desc">
+      <title id="account-admin-decisions-title">Decisiones al administrar cuentas</title>
+      <desc id="account-admin-decisions-desc">Tres flujos administrativos muestran las precondiciones para activar, desactivar o cambiar el rol de un usuario, incluyendo la protección transaccional que impide eliminar al último administrador activo.</desc>
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/>
+        </marker>
+        <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/>
+        </marker>
+        <marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#2e5aa8"/>
+        </marker>
+      </defs>
+
+      <rect width="1280" height="720" fill="#f5f5f5"/>
+
+      <!-- Lanes. -->
+      <rect x="40" y="40" width="360" height="548" rx="8" fill="rgba(45,49,66,0.015)" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="460" y="40" width="360" height="548" rx="8" fill="rgba(235,108,54,0.018)" stroke="rgba(235,108,54,0.36)" stroke-width="0.8"/>
+      <rect x="880" y="40" width="360" height="548" rx="8" fill="rgba(45,49,66,0.015)" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+
+      <rect x="64" y="32" width="136" height="20" rx="2" fill="#f5f5f5"/>
+      <text x="72" y="48" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.12em">ACTIVAR CUENTA</text>
+      <rect x="484" y="32" width="160" height="20" rx="2" fill="#f5f5f5"/>
+      <text x="492" y="48" fill="#eb6c36" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.12em">DESACTIVAR CUENTA</text>
+      <rect x="904" y="32" width="136" height="20" rx="2" fill="#f5f5f5"/>
+      <text x="912" y="48" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.12em">CAMBIAR ROL</text>
+
+      <text x="220" y="84" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">PATCH /users/:id/activate</text>
+      <text x="640" y="84" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">PATCH /users/:id/deactivate</text>
+      <text x="1060" y="84" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">PATCH /users/:id/role</text>
+
+      <!-- Connectors before decision and result nodes. -->
+      <path d="M 72 240 H 60 Q 52 240 52 248 V 388 Q 52 396 60 396 H 128 Q 136 396 136 404 V 420" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <path d="M 368 240 H 380 Q 388 240 388 248 V 388 Q 388 396 380 396 H 304 Q 296 396 296 404 V 420" fill="none" stroke="#4f5d75" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <rect x="64" y="304" width="28" height="16" rx="2" fill="#f5f5f5"/>
+      <text x="80" y="316" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">SÍ</text>
+      <rect x="348" y="304" width="28" height="16" rx="2" fill="#f5f5f5"/>
+      <text x="364" y="316" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">NO</text>
+
+      <path d="M 492 240 H 480 Q 472 240 472 248 V 388 Q 472 396 480 396 H 548 Q 556 396 556 404 V 420" fill="none" stroke="#eb6c36" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+      <path d="M 788 240 H 800 Q 808 240 808 248 V 388 Q 808 396 800 396 H 724 Q 716 396 716 404 V 420" fill="none" stroke="#4f5d75" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <rect x="484" y="304" width="28" height="16" rx="2" fill="#f5f5f5"/>
+      <text x="500" y="316" fill="#eb6c36" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">SÍ</text>
+      <rect x="768" y="304" width="28" height="16" rx="2" fill="#f5f5f5"/>
+      <text x="784" y="316" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">NO</text>
+
+      <path d="M 912 240 H 900 Q 892 240 892 248 V 388 Q 892 396 900 396 H 968 Q 976 396 976 404 V 420" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <path d="M 1208 240 H 1220 Q 1228 240 1228 248 V 388 Q 1228 396 1220 396 H 1144 Q 1136 396 1136 404 V 420" fill="none" stroke="#4f5d75" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <rect x="904" y="304" width="28" height="16" rx="2" fill="#f5f5f5"/>
+      <text x="920" y="316" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">SÍ</text>
+      <rect x="1188" y="304" width="28" height="16" rx="2" fill="#f5f5f5"/>
+      <text x="1204" y="316" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">NO</text>
+
+      <!-- Activation decision and outcomes. -->
+      <polygon points="220,112 368,240 220,368 72,240" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="220" y="188" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">¿Puede activarse?</text>
+      <text x="220" y="216" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">1 · usuario existe</text>
+      <text x="220" y="236" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">2 · passwordHash existe</text>
+      <text x="220" y="256" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">3 · status != ACTIVE</text>
+      <text x="220" y="284" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">BLOCKED también pasa</text>
+
+      <rect x="72" y="420" width="128" height="112" rx="20" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+      <text x="136" y="468" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Usuario ACTIVE</text>
+      <text x="136" y="492" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">update directo</text>
+      <rect x="240" y="420" width="128" height="112" rx="20" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.24)" stroke-width="1" stroke-dasharray="4,3"/>
+      <text x="304" y="468" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Sin cambios</text>
+      <text x="304" y="492" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">404 o 409</text>
+
+      <!-- Deactivation decision and outcomes. -->
+      <polygon points="640,112 788,240 640,368 492,240" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1.2"/>
+      <text x="640" y="176" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">¿Puede desactivarse?</text>
+      <text x="640" y="204" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">1 · usuario existe</text>
+      <text x="640" y="224" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">2 · status != INACTIVE</text>
+      <text x="640" y="244" fill="#eb6c36" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">3 · si ACTIVE + Administrador:</text>
+      <text x="640" y="264" fill="#eb6c36" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">existe otro admin ACTIVE</text>
+      <text x="640" y="292" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">transacción SERIALIZABLE</text>
+
+      <rect x="492" y="420" width="128" height="112" rx="20" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1.2"/>
+      <text x="556" y="468" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Usuario INACTIVE</text>
+      <text x="556" y="492" fill="#eb6c36" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">invariante preservada</text>
+      <rect x="660" y="420" width="128" height="112" rx="20" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.24)" stroke-width="1" stroke-dasharray="4,3"/>
+      <text x="724" y="468" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Sin cambios</text>
+      <text x="724" y="492" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">404 o 409</text>
+
+      <!-- Role-change decision and outcomes. -->
+      <polygon points="1060,112 1208,240 1060,368 912,240" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="1060" y="168" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">¿Puede cambiar el rol?</text>
+      <text x="1060" y="196" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">1 · usuario y rol existen</text>
+      <text x="1060" y="216" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">2 · rol destino isActive</text>
+      <text x="1060" y="236" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">3 · si degrada admin ACTIVE:</text>
+      <text x="1060" y="256" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">existe otro admin ACTIVE</text>
+      <text x="1060" y="284" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">transacción SERIALIZABLE</text>
+
+      <rect x="912" y="420" width="128" height="112" rx="20" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+      <text x="976" y="468" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Rol actualizado</text>
+      <text x="976" y="492" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">roleId destino</text>
+      <rect x="1080" y="420" width="128" height="112" rx="20" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.24)" stroke-width="1" stroke-dasharray="4,3"/>
+      <text x="1144" y="468" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Sin cambios</text>
+      <text x="1144" y="492" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">404 o 409</text>
+
+      <!-- Legend strip. -->
+      <line x1="40" y1="624" x2="1240" y2="624" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="40" y="652" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">LEYENDA</text>
+      <polygon points="168,640 184,648 168,656 152,648" fill="#ffffff" stroke="#2d3142" stroke-width="0.8"/>
+      <text x="200" y="652" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif">Precondiciones</text>
+      <rect x="348" y="640" width="16" height="16" rx="8" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="0.8"/>
+      <text x="376" y="652" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif">Cambio aplicado</text>
+      <rect x="536" y="640" width="16" height="16" rx="8" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.24)" stroke-width="0.8" stroke-dasharray="4,3"/>
+      <text x="564" y="652" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif">Operación rechazada</text>
+      <rect x="756" y="640" width="16" height="16" rx="4" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="0.8"/>
+      <text x="784" y="652" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif">Protección del último administrador</text>
+      <line x1="1044" y1="648" x2="1084" y2="648" stroke="#4f5d75" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <text x="1100" y="652" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif">No</text>
+    </svg>
+
+    <section class="notes" aria-label="Reglas y límites de administración de cuentas">
+      <div>
+        <h2>Orden y atomicidad</h2>
+        <p>Las listas dentro de cada decisión conservan el orden de validación del servicio. Desactivar y cambiar rol ejecutan la comprobación del último administrador y la escritura en una transacción con aislamiento <code>Serializable</code>. Activar realiza una actualización directa después de comprobar contraseña y estado.</p>
+      </div>
+      <div>
+        <h2>Matices actuales</h2>
+        <ul>
+          <li>Activar o desactivar acepta salir desde <code>BLOCKED</code>.</li>
+          <li>La protección administrativa solo aplica al usuario <code>ACTIVE</code>.</li>
+          <li>Un rol destino inactivo no puede asignarse.</li>
+          <li>Todos los endpoints exigen JWT y rol exacto <code>Administrador</code>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>3 operaciones administrativas · 9 nodos · 6 resultados dirigidos · Estado actual</footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matriz actual de control de acceso de SGI-Curime</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --paper: #f5f5f5;
+      --ink: #2d3142;
+      --muted: #4f5d75;
+      --soft: #7a8399;
+      --accent: #eb6c36;
+      --font-sans: 'Geist', system-ui, sans-serif;
+      --font-serif: 'Instrument Serif', serif;
+      --font-mono: 'Geist Mono', ui-monospace, monospace;
+    }
+
+    body {
+      min-height: 100vh;
+      padding: 40px;
+      overflow-x: auto;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-sans);
+    }
+
+    main { width: min(1280px, 100%); margin: 0 auto; }
+
+    .eyebrow {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+      font-family: var(--font-serif);
+      font-size: 40px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      margin-bottom: 24px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .diagram { width: 100%; min-width: 960px; display: block; }
+
+    .notes {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(45, 49, 66, 0.12);
+    }
+
+    .notes h2 {
+      margin-bottom: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .notes p, .notes li { color: var(--muted); font-size: 14px; line-height: 1.5; }
+    .notes ul { padding-left: 20px; }
+    code { font-family: var(--font-mono); font-size: 0.92em; }
+
+    footer {
+      margin-top: 20px;
+      color: var(--soft);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    @media (max-width: 720px) {
+      body { padding: 24px 16px; }
+      h1 { font-size: 32px; }
+      .notes { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Matriz de seguridad · Estado actual · Estilo provisional</p>
+    <h1>Control de acceso actual</h1>
+    <p class="subtitle">Quién puede invocar cada grupo de operaciones REST verificable al 13 de agosto de 2026.</p>
+
+    <svg class="diagram" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="access-control-matrix-title access-control-matrix-desc">
+      <title id="access-control-matrix-title">Matriz actual de control de acceso</title>
+      <desc id="access-control-matrix-desc">Matriz de operaciones REST por actor: las operaciones de entrada son públicas, el perfil propio exige una cuenta activa y desbloqueada con JWT, y las operaciones administrativas exigen además el rol exacto Administrador.</desc>
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/>
+        </marker>
+        <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/>
+        </marker>
+        <marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#2e5aa8"/>
+        </marker>
+      </defs>
+
+      <rect width="1280" height="720" fill="#f5f5f5"/>
+
+      <!-- Header. -->
+      <rect x="40" y="40" width="400" height="60" rx="8" fill="#ffffff" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="240" y="68" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Operación REST</text>
+      <text x="240" y="88" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">agrupada por regla de acceso</text>
+
+      <rect x="456" y="40" width="240" height="60" rx="8" fill="#2d3142"/>
+      <text x="576" y="68" fill="#ffffff" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Sin sesión</text>
+      <text x="576" y="88" fill="rgba(255,255,255,0.85)" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">sin bearer token</text>
+
+      <rect x="712" y="40" width="240" height="60" rx="8" fill="#2d3142"/>
+      <text x="832" y="68" fill="#ffffff" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Usuario activo</text>
+      <text x="832" y="88" fill="rgba(255,255,255,0.85)" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">JWT · ACTIVE · unlocked</text>
+
+      <rect x="968" y="40" width="240" height="60" rx="8" fill="#2d3142"/>
+      <text x="1088" y="68" fill="#ffffff" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Administrador activo</text>
+      <text x="1088" y="88" fill="rgba(255,255,255,0.85)" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">JWT · rol “Administrador”</text>
+
+      <!-- Row 1: scaffold root. -->
+      <rect x="40" y="116" width="400" height="40" rx="4" fill="#ffffff" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="56" y="140" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif">Raíz de la API</text>
+      <text x="424" y="140" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">GET /</text>
+      <rect x="456" y="116" width="240" height="40" rx="4" fill="rgba(79,93,117,0.08)" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="712" y="116" width="240" height="40" rx="4" fill="rgba(79,93,117,0.08)" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="968" y="116" width="240" height="40" rx="4" fill="rgba(79,93,117,0.08)" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="576" y="140" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Público</text>
+      <text x="832" y="140" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Público</text>
+      <text x="1088" y="140" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Público</text>
+
+      <!-- Row 2: request creation. -->
+      <rect x="40" y="160" width="400" height="40" rx="4" fill="#ffffff" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="56" y="184" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif">Crear solicitud de usuario</text>
+      <text x="424" y="184" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">POST /user-requests</text>
+      <rect x="456" y="160" width="240" height="40" rx="4" fill="rgba(79,93,117,0.08)" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="712" y="160" width="240" height="40" rx="4" fill="rgba(79,93,117,0.08)" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="968" y="160" width="240" height="40" rx="4" fill="rgba(79,93,117,0.08)" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="576" y="184" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Público</text>
+      <text x="832" y="184" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Público</text>
+      <text x="1088" y="184" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Público</text>
+
+      <!-- Row 3: login. -->
+      <rect x="40" y="204" width="400" height="40" rx="4" fill="#ffffff" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="56" y="228" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif">Iniciar sesión</text>
+      <text x="424" y="228" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">POST /auth/login</text>
+      <rect x="456" y="204" width="240" height="40" rx="4" fill="rgba(79,93,117,0.08)" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="712" y="204" width="240" height="40" rx="4" fill="rgba(79,93,117,0.08)" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="968" y="204" width="240" height="40" rx="4" fill="rgba(79,93,117,0.08)" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="576" y="228" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Público</text>
+      <text x="832" y="228" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Público</text>
+      <text x="1088" y="228" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Público</text>
+
+      <!-- Row 4: activation. -->
+      <rect x="40" y="248" width="400" height="40" rx="4" fill="#ffffff" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="56" y="272" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif">Activar cuenta</text>
+      <text x="424" y="272" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">POST /auth/activate-account</text>
+      <rect x="456" y="248" width="240" height="40" rx="4" fill="rgba(79,93,117,0.08)" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="712" y="248" width="240" height="40" rx="4" fill="rgba(79,93,117,0.08)" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="968" y="248" width="240" height="40" rx="4" fill="rgba(79,93,117,0.08)" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="576" y="272" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Token de activación</text>
+      <text x="832" y="272" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Token de activación</text>
+      <text x="1088" y="272" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Token de activación</text>
+
+      <!-- Row 5: own profile. -->
+      <rect x="40" y="292" width="400" height="40" rx="4" fill="#ffffff" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="56" y="316" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif">Consultar perfil propio</text>
+      <text x="424" y="316" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">GET /auth/me</text>
+      <rect x="456" y="292" width="240" height="40" rx="4" fill="#f5f5f5" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="712" y="292" width="240" height="40" rx="4" fill="#ffffff" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="968" y="292" width="240" height="40" rx="4" fill="#ffffff" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="576" y="316" fill="#7a8399" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Sin acceso</text>
+      <text x="832" y="316" fill="#2d3142" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">JWT</text>
+      <text x="1088" y="316" fill="#2d3142" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">JWT</text>
+
+      <!-- Row 6: admin probe. -->
+      <rect x="40" y="336" width="400" height="40" rx="4" fill="#ffffff" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="56" y="360" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif">Probar acceso administrativo</text>
+      <text x="424" y="360" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">GET /auth/admin-test</text>
+      <rect x="456" y="336" width="240" height="40" rx="4" fill="#f5f5f5" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="712" y="336" width="240" height="40" rx="4" fill="#f5f5f5" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="968" y="336" width="240" height="40" rx="4" fill="rgba(45,49,66,0.08)" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="576" y="360" fill="#7a8399" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Sin acceso</text>
+      <text x="832" y="360" fill="#7a8399" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Sin acceso</text>
+      <text x="1088" y="360" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Administrador</text>
+
+      <!-- Row 7: request reads. -->
+      <rect x="40" y="380" width="400" height="40" rx="4" fill="#ffffff" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="56" y="404" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif">Listar y consultar solicitudes</text>
+      <text x="424" y="404" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">GET /user-requests + /:id</text>
+      <rect x="456" y="380" width="240" height="40" rx="4" fill="#f5f5f5" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="712" y="380" width="240" height="40" rx="4" fill="#f5f5f5" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="968" y="380" width="240" height="40" rx="4" fill="rgba(45,49,66,0.08)" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="576" y="404" fill="#7a8399" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Sin acceso</text>
+      <text x="832" y="404" fill="#7a8399" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Sin acceso</text>
+      <text x="1088" y="404" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Administrador</text>
+
+      <!-- Row 8: request decisions. -->
+      <rect x="40" y="424" width="400" height="40" rx="4" fill="#ffffff" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="56" y="448" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif">Aprobar o rechazar solicitudes</text>
+      <text x="424" y="448" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">PATCH /user-requests/:id/*</text>
+      <rect x="456" y="424" width="240" height="40" rx="4" fill="#f5f5f5" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="712" y="424" width="240" height="40" rx="4" fill="#f5f5f5" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="968" y="424" width="240" height="40" rx="4" fill="rgba(45,49,66,0.08)" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="576" y="448" fill="#7a8399" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Sin acceso</text>
+      <text x="832" y="448" fill="#7a8399" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Sin acceso</text>
+      <text x="1088" y="448" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Administrador</text>
+
+      <!-- Row 9: user reads. -->
+      <rect x="40" y="468" width="400" height="40" rx="4" fill="#ffffff" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="56" y="492" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif">Listar y consultar usuarios</text>
+      <text x="424" y="492" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">GET /users + /:id</text>
+      <rect x="456" y="468" width="240" height="40" rx="4" fill="#f5f5f5" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="712" y="468" width="240" height="40" rx="4" fill="#f5f5f5" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="968" y="468" width="240" height="40" rx="4" fill="rgba(45,49,66,0.08)" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="576" y="492" fill="#7a8399" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Sin acceso</text>
+      <text x="832" y="492" fill="#7a8399" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Sin acceso</text>
+      <text x="1088" y="492" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Administrador</text>
+
+      <!-- Row 10: user profile mutation. -->
+      <rect x="40" y="512" width="400" height="40" rx="4" fill="#ffffff" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="56" y="536" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif">Actualizar datos de usuario</text>
+      <text x="424" y="536" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">PATCH /users/:id</text>
+      <rect x="456" y="512" width="240" height="40" rx="4" fill="#f5f5f5" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="712" y="512" width="240" height="40" rx="4" fill="#f5f5f5" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="968" y="512" width="240" height="40" rx="4" fill="rgba(45,49,66,0.08)" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="576" y="536" fill="#7a8399" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Sin acceso</text>
+      <text x="832" y="536" fill="#7a8399" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Sin acceso</text>
+      <text x="1088" y="536" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Administrador</text>
+
+      <!-- Row 11: privileged user mutation. -->
+      <rect x="40" y="556" width="400" height="40" rx="4" fill="#ffffff" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="56" y="580" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif">Cambiar rol o estado de usuario</text>
+      <text x="424" y="580" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">PATCH /users/:id/{role|activate|deactivate}</text>
+      <rect x="456" y="556" width="240" height="40" rx="4" fill="#f5f5f5" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="712" y="556" width="240" height="40" rx="4" fill="#f5f5f5" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <rect x="968" y="556" width="240" height="40" rx="4" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1.2"/>
+      <text x="576" y="580" fill="#7a8399" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Sin acceso</text>
+      <text x="832" y="580" fill="#7a8399" font-size="12" font-family="'Geist', sans-serif" text-anchor="middle">Sin acceso</text>
+      <text x="1088" y="576" fill="#eb6c36" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Administrador</text>
+      <text x="1088" y="588" fill="#eb6c36" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">rol exacto requerido</text>
+
+      <!-- Legend. -->
+      <line x1="40" y1="624" x2="1208" y2="624" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="40" y="652" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">LEYENDA</text>
+      <rect x="156" y="640" width="16" height="16" rx="4" fill="rgba(79,93,117,0.08)" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="184" y="652" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif">Público o token de activación</text>
+      <rect x="456" y="640" width="16" height="16" rx="4" fill="#ffffff" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="484" y="652" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif">JWT válido</text>
+      <rect x="620" y="640" width="16" height="16" rx="4" fill="rgba(45,49,66,0.08)" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="648" y="652" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif">Rol Administrador</text>
+      <rect x="824" y="640" width="16" height="16" rx="4" fill="#f5f5f5" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="852" y="652" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif">Sin acceso</text>
+      <rect x="1000" y="640" width="16" height="16" rx="4" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="0.8"/>
+      <text x="1028" y="652" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif">Regla crítica</text>
+    </svg>
+
+    <section class="notes" aria-label="Reglas y límites del control de acceso">
+      <div>
+        <h2>Regla efectiva</h2>
+        <p><code>JwtAuthGuard</code> valida firma y expiración; después <code>JwtStrategy</code> vuelve a cargar al usuario y exige <code>ACTIVE</code> y <code>lockedAt == null</code>. <code>RolesGuard</code> compara el rol actual con el nombre exacto <code>Administrador</code>. Las filas agrupan únicamente endpoints con la misma protección.</p>
+      </div>
+      <div>
+        <h2>Límites actuales</h2>
+        <ul>
+          <li>No existe un sistema de permisos granulares.</li>
+          <li>No existe autoservicio para actualizar el perfil.</li>
+          <li>No existen operaciones para escribir <code>BLOCKED</code> o <code>lockedAt</code>.</li>
+          <li><code>GET /</code> es una ruta pública del scaffolding.</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>16 endpoints · 11 grupos de acceso · 3 perfiles de actor · Autorización por rol exacto</footer>
+  </main>
+</body>
+</html>

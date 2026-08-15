@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modelo de datos actual de SGI-Curime</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --paper: #f5f5f5;
+      --ink: #2d3142;
+      --muted: #4f5d75;
+      --soft: #7a8399;
+      --font-sans: 'Geist', system-ui, sans-serif;
+      --font-serif: 'Instrument Serif', serif;
+      --font-mono: 'Geist Mono', ui-monospace, monospace;
+    }
+
+    body {
+      min-height: 100vh;
+      padding: 40px;
+      overflow-x: auto;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-sans);
+    }
+
+    main { width: min(1280px, 100%); margin: 0 auto; }
+
+    .eyebrow {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+      font-family: var(--font-serif);
+      font-size: 40px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      margin-bottom: 24px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .diagram { width: 100%; min-width: 960px; display: block; }
+
+    .notes {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(45, 49, 66, 0.12);
+    }
+
+    .notes h2 {
+      margin-bottom: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .notes p, .notes li { color: var(--muted); font-size: 14px; line-height: 1.5; }
+    .notes ul { padding-left: 20px; }
+
+    footer {
+      margin-top: 20px;
+      color: var(--soft);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    code { font-family: var(--font-mono); font-size: 0.92em; }
+
+    @media (max-width: 720px) {
+      body { padding: 24px 16px; }
+      h1 { font-size: 32px; }
+      .notes { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Modelo ER · Estado actual · Estilo provisional</p>
+    <h1>Modelo de datos actual de SGI-Curime</h1>
+    <p class="subtitle">Entidades persistidas y relaciones declaradas en Prisma al 13 de agosto de 2026.</p>
+
+    <svg class="diagram" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="data-model-title data-model-desc">
+      <title id="data-model-title">Modelo de datos actual de SGI-Curime</title>
+      <desc id="data-model-desc">Diagrama entidad-relación con roles, usuarios, tokens de activación, solicitudes de usuario, afiliados y solicitudes de afiliación; solo Role con User y User con AccountActivationToken tienen relaciones declaradas.</desc>
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/>
+        </marker>
+        <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/>
+        </marker>
+        <marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#2e5aa8"/>
+        </marker>
+      </defs>
+
+      <rect width="1280" height="720" fill="#f5f5f5"/>
+
+      <!-- Relationships are painted before entities. -->
+      <line x1="280" y1="168" x2="340" y2="168" stroke="#4f5d75" stroke-width="1.2"/>
+      <rect x="288" y="140" width="44" height="16" rx="2" fill="#f5f5f5"/>
+      <text x="312" y="152" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">TIENE</text>
+      <text x="292" y="184" fill="#2d3142" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">1</text>
+      <text x="328" y="184" fill="#2d3142" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">N</text>
+
+      <line x1="740" y1="240" x2="800" y2="240" stroke="#4f5d75" stroke-width="1.2"/>
+      <rect x="748" y="212" width="44" height="16" rx="2" fill="#f5f5f5"/>
+      <text x="772" y="224" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">EMITE</text>
+      <text x="752" y="256" fill="#2d3142" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">1</text>
+      <text x="788" y="256" fill="#2d3142" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">N</text>
+
+      <!-- Role. -->
+      <rect x="40" y="80" width="240" height="176" rx="6" fill="#f5f5f5" stroke="#2d3142" stroke-width="1"/>
+      <rect x="40" y="80" width="240" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <rect x="52" y="92" width="48" height="16" rx="2" fill="transparent" stroke="rgba(45,49,66,0.40)" stroke-width="0.8"/>
+      <text x="76" y="104" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ENTITY</text>
+      <text x="160" y="108" fill="#2d3142" font-size="16" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Role</text>
+      <text x="56" y="152" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace"># id: Int</text>
+      <text x="56" y="172" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">name: String [unique]</text>
+      <text x="56" y="192" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">description: String?</text>
+      <text x="56" y="212" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">isActive: Boolean</text>
+      <text x="56" y="232" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace">+ createdAt, updatedAt</text>
+
+      <!-- User aggregate root. -->
+      <rect x="340" y="56" width="400" height="336" rx="6" fill="#f5f5f5"/>
+      <rect x="340" y="56" width="400" height="336" rx="6" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1.2"/>
+      <rect x="340" y="56" width="400" height="48" rx="6" fill="#ffffff" stroke="#eb6c36" stroke-width="1.2"/>
+      <rect x="352" y="68" width="48" height="16" rx="2" fill="transparent" stroke="rgba(235,108,54,0.50)" stroke-width="0.8"/>
+      <text x="376" y="80" fill="#eb6c36" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ENTITY</text>
+      <text x="540" y="84" fill="#2d3142" font-size="16" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">User</text>
+      <text x="356" y="128" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace"># id: Int</text>
+      <text x="356" y="148" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">→ roleId: Int</text>
+      <text x="356" y="168" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">fullName: String</text>
+      <text x="356" y="188" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">identification: String [unique]</text>
+      <text x="356" y="208" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">email: String [unique]</text>
+      <text x="356" y="228" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">passwordHash: String?</text>
+      <text x="356" y="248" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">status: UserStatus</text>
+      <text x="356" y="268" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">failedLoginAttempts: Int</text>
+      <text x="356" y="288" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">lockedAt: DateTime?</text>
+      <text x="356" y="308" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">lastLoginAt: DateTime?</text>
+      <text x="356" y="332" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace">+ phone?, address?</text>
+      <text x="356" y="352" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace">+ createdAt, updatedAt</text>
+
+      <!-- Activation token. -->
+      <rect x="800" y="128" width="400" height="224" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/>
+      <rect x="800" y="128" width="400" height="48" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+      <rect x="812" y="140" width="48" height="16" rx="2" fill="transparent" stroke="rgba(79,93,117,0.40)" stroke-width="0.8"/>
+      <text x="836" y="152" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ENTITY</text>
+      <text x="1000" y="156" fill="#2d3142" font-size="16" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">AccountActivationToken</text>
+      <text x="816" y="200" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace"># id: Int</text>
+      <text x="816" y="220" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">→ userId: Int [cascade delete]</text>
+      <text x="816" y="240" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">tokenHash: String [unique]</text>
+      <text x="816" y="260" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">expiresAt: DateTime [index]</text>
+      <text x="816" y="280" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">usedAt: DateTime?</text>
+      <text x="816" y="304" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace">+ createdAt</text>
+
+      <!-- Standalone request and affiliate records. -->
+      <rect x="40" y="424" width="360" height="196" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/>
+      <rect x="40" y="424" width="360" height="48" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+      <rect x="52" y="436" width="48" height="16" rx="2" fill="transparent" stroke="rgba(79,93,117,0.40)" stroke-width="0.8"/>
+      <text x="76" y="448" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ENTITY</text>
+      <text x="220" y="452" fill="#2d3142" font-size="16" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">UserRequest</text>
+      <text x="56" y="496" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace"># id: Int</text>
+      <text x="56" y="516" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">identification: String [index]</text>
+      <text x="56" y="536" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">email: String [index]</text>
+      <text x="56" y="556" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">status: RequestStatus [index]</text>
+      <text x="56" y="576" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">reviewedById: Int? [scalar]</text>
+      <text x="56" y="600" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace">+ profile, reason, review, timestamps</text>
+
+      <rect x="460" y="424" width="320" height="196" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/>
+      <rect x="460" y="424" width="320" height="48" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+      <rect x="472" y="436" width="48" height="16" rx="2" fill="transparent" stroke="rgba(79,93,117,0.40)" stroke-width="0.8"/>
+      <text x="496" y="448" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ENTITY</text>
+      <text x="620" y="452" fill="#2d3142" font-size="16" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Affiliate</text>
+      <text x="476" y="496" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace"># id: Int</text>
+      <text x="476" y="516" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">identification: String [unique]</text>
+      <text x="476" y="536" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">birthDate: DateTime</text>
+      <text x="476" y="556" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">status: AffiliateStatus</text>
+      <text x="476" y="580" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace">+ profile, affiliation, timestamps</text>
+
+      <rect x="840" y="424" width="400" height="196" rx="6" fill="#f5f5f5" stroke="#4f5d75" stroke-width="1"/>
+      <rect x="840" y="424" width="400" height="48" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+      <rect x="852" y="436" width="48" height="16" rx="2" fill="transparent" stroke="rgba(79,93,117,0.40)" stroke-width="0.8"/>
+      <text x="876" y="448" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ENTITY</text>
+      <text x="1040" y="452" fill="#2d3142" font-size="16" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">AffiliateRequest</text>
+      <text x="856" y="496" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace"># id: Int</text>
+      <text x="856" y="516" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">identification: String [index]</text>
+      <text x="856" y="536" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">status: RequestStatus [index]</text>
+      <text x="856" y="556" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">reviewedById: Int? [scalar]</text>
+      <text x="856" y="580" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace">+ profile, reason, review, timestamps</text>
+
+      <!-- Bottom legend. -->
+      <line x1="40" y1="648" x2="1240" y2="648" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+      <text x="40" y="676" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">LEYENDA</text>
+      <text x="144" y="676" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace"># PK</text>
+      <text x="216" y="676" fill="#2d3142" font-size="12" font-family="'Geist Mono', monospace">→ FK</text>
+      <rect x="288" y="664" width="16" height="16" rx="4" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="0.8"/>
+      <text x="316" y="676" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif">Raíz focal</text>
+      <rect x="432" y="664" width="16" height="16" rx="4" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="0.8"/>
+      <text x="460" y="676" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif">Registro persistido</text>
+      <text x="636" y="676" fill="#4f5d75" font-size="12" font-family="'Geist Mono', monospace">?</text>
+      <text x="656" y="676" fill="#4f5d75" font-size="12" font-family="'Geist', sans-serif">Nullable</text>
+      <text x="760" y="676" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace">+ CAMPOS RESUMIDOS</text>
+    </svg>
+
+    <section class="notes" aria-label="Fidelidad y fuentes">
+      <div>
+        <h2>Fidelidad</h2>
+        <p>Se conservaron las seis entidades, todas las claves, restricciones únicas, índices relevantes, estados y campos operativos de acceso. Para ajustar el detalle al lienzo se agruparon campos repetitivos de perfil, contacto, revisión y auditoría. <code>reviewedById</code> es escalar en ambas solicitudes y no se representa como relación.</p>
+      </div>
+      <div>
+        <h2>Fuentes</h2>
+        <ul>
+          <li><code>backend/prisma/schema.prisma</code></li>
+          <li><code>20260811211220_init_users_admin</code></li>
+          <li><code>20260812050052_add_account_activation</code></li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>Detalle: balanced · 6 entidades → 6 dibujadas · Apariencia predeterminada temporal</footer>
+  </main>
+</body>
+</html>
