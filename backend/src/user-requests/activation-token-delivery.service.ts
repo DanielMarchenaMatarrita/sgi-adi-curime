@@ -9,7 +9,9 @@ export type ActivationDelivery = {
 
 @Injectable()
 export class ActivationTokenDeliveryService {
-  async deliver(_delivery: ActivationDelivery): Promise<void> {
+  deliver(delivery: ActivationDelivery): Promise<void> {
     // Integration point for a future email provider. Never log the token.
+    void delivery;
+    return Promise.resolve();
   }
 }

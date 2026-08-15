@@ -2,6 +2,11 @@ import { ConflictException, NotFoundException } from '@nestjs/common';
 import { createHash } from 'crypto';
 import { UserRequestsService } from './user-requests.service';
 
+function objectContaining<T extends object>(value: T): T {
+  const matcher: unknown = expect.objectContaining(value);
+  return matcher as T;
+}
+
 describe('UserRequestsService', () => {
   const pending = {
     id: 10,
@@ -90,7 +95,7 @@ describe('UserRequestsService', () => {
     });
     expect(prisma.userRequest.create).toHaveBeenCalledWith(
       expect.objectContaining({
-        data: expect.objectContaining({ status: 'PENDING' }),
+        data: objectContaining({ status: 'PENDING' }),
       }),
     );
     expect(tx.user.create).not.toHaveBeenCalled();
@@ -141,7 +146,7 @@ describe('UserRequestsService', () => {
     await service.reject(10, 'No cumple requisitos', 1);
     expect(prisma.userRequest.updateMany).toHaveBeenCalledWith({
       where: { id: 10, status: 'PENDING' },
-      data: expect.objectContaining({
+      data: objectContaining({
         status: 'REJECTED',
         rejectionReason: 'No cumple requisitos',
         reviewedById: 1,
@@ -163,7 +168,7 @@ describe('UserRequestsService', () => {
     const result = await service.approve(10, { roleId: 2 }, 1);
     expect(tx.user.create).toHaveBeenCalledWith(
       expect.objectContaining({
-        data: expect.objectContaining({
+        data: objectContaining({
           passwordHash: null,
           status: 'INACTIVE',
           roleId: 2,
@@ -180,7 +185,10 @@ describe('UserRequestsService', () => {
     expect(generated.tokenHash).not.toBe(rawToken);
     expect(tx.userRequest.updateMany).toHaveBeenCalledWith(
       expect.objectContaining({
-        data: expect.objectContaining({ status: 'APPROVED', reviewedById: 1 }),
+        data: objectContaining({
+          status: 'APPROVED',
+          reviewedById: 1,
+        }),
       }),
     );
     expect(delivery.deliver).toHaveBeenCalledWith(
