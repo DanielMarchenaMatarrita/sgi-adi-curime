@@ -22,6 +22,11 @@ type TestUser = {
   role: { name: string };
 };
 
+type LoginResponse = {
+  accessToken: string;
+  user: Omit<TestUser, 'identification' | 'passwordHash' | 'lockedAt'>;
+};
+
 describe('AuthController (e2e)', () => {
   let app: INestApplication<App>;
   let jwtService: JwtService;
@@ -94,16 +99,17 @@ describe('AuthController (e2e)', () => {
 
   it('allows login with valid credentials', async () => {
     const response = await login().expect(200);
+    const body = response.body as unknown as LoginResponse;
 
-    expect(response.body.accessToken).toEqual(expect.any(String));
-    expect(response.body.user).toEqual({
+    expect(body.accessToken).toEqual(expect.any(String));
+    expect(body.user).toEqual({
       id: 1,
       fullName: 'Administrador de Prueba',
       email: 'admin@curime.test',
       status: 'ACTIVE',
       role: 'Administrador',
     });
-    expect(response.body.user.passwordHash).toBeUndefined();
+    expect(body.user.passwordHash).toBeUndefined();
   });
 
   it('rejects an incorrect password', async () => {
@@ -112,8 +118,9 @@ describe('AuthController (e2e)', () => {
 
   it('rejects an unknown email with the same generic response', async () => {
     const response = await login('unknown@curime.test').expect(401);
+    const body = response.body as unknown as { message: string };
 
-    expect(response.body.message).toBe('Invalid credentials');
+    expect(body.message).toBe('Invalid credentials');
   });
 
   it('rejects an inactive account', async () => {
@@ -134,13 +141,13 @@ describe('AuthController (e2e)', () => {
   });
 
   it('returns the authenticated user for a valid JWT', async () => {
-    const { body } = await login().expect(200);
+    const loginResponse = await login().expect(200);
+    const loginBody = loginResponse.body as unknown as LoginResponse;
 
     const response = await request(app.getHttpServer())
       .get('/auth/me')
-      .set('Authorization', `Bearer ${body.accessToken}`)
+      .set('Authorization', `Bearer ${loginBody.accessToken}`)
       .expect(200);
-
     expect(response.body).toEqual({
       id: 1,
       fullName: 'Administrador de Prueba',
@@ -174,7 +181,8 @@ describe('AuthController (e2e)', () => {
   });
 
   it('rejects a JWT when its user becomes inactive', async () => {
-    const { body } = await login().expect(200);
+    const response = await login().expect(200);
+    const body = response.body as unknown as LoginResponse;
     currentUser = { ...currentUser!, status: 'INACTIVE' };
 
     await request(app.getHttpServer())
@@ -184,7 +192,8 @@ describe('AuthController (e2e)', () => {
   });
 
   it('allows the administrator endpoint for the Administrador role', async () => {
-    const { body } = await login().expect(200);
+    const response = await login().expect(200);
+    const body = response.body as unknown as LoginResponse;
 
     await request(app.getHttpServer())
       .get('/auth/admin-test')
@@ -195,7 +204,8 @@ describe('AuthController (e2e)', () => {
 
   it('denies the administrator endpoint to another role', async () => {
     currentUser = { ...currentUser!, role: { name: 'Tesorero' } };
-    const { body } = await login().expect(200);
+    const response = await login().expect(200);
+    const body = response.body as unknown as LoginResponse;
 
     await request(app.getHttpServer())
       .get('/auth/admin-test')

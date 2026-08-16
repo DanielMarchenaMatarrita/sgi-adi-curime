@@ -3,6 +3,16 @@ import * as bcrypt from 'bcrypt';
 import { createHash } from 'crypto';
 import { AccountActivationService } from './account-activation.service';
 
+function anyMatcher<T>(constructor: new (...args: never[]) => T): T {
+  const matcher: unknown = expect.any(constructor);
+  return matcher as T;
+}
+
+function objectContaining<T extends object>(value: T): T {
+  const matcher: unknown = expect.objectContaining(value);
+  return matcher as T;
+}
+
 describe('AccountActivationService', () => {
   const token = 'secure-token';
   const tokenHash = createHash('sha256').update(token).digest('hex');
@@ -48,16 +58,21 @@ describe('AccountActivationService', () => {
     });
     expect(tx.user.updateMany).toHaveBeenCalledWith({
       where: { id: 8, status: 'INACTIVE' },
-      data: { passwordHash: expect.any(String), status: 'ACTIVE' },
+      data: {
+        passwordHash: anyMatcher(String),
+        status: 'ACTIVE',
+      },
     });
-    const update = tx.user.updateMany.mock.calls[0][0] as {
-      data: { passwordHash: string };
-    };
+    const update = (
+      tx.user.updateMany.mock.calls as unknown as Array<
+        [{ data: { passwordHash: string } }]
+      >
+    )[0][0];
     await expect(
       bcrypt.compare(dto.password, update.data.passwordHash),
     ).resolves.toBe(true);
     expect(tx.accountActivationToken.updateMany).toHaveBeenCalledWith(
-      expect.objectContaining({ data: { usedAt: expect.any(Date) } }),
+      objectContaining({ data: { usedAt: anyMatcher(Date) } }),
     );
   });
 

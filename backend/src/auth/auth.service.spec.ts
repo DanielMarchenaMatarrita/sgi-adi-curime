@@ -2,6 +2,11 @@ import { UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { AuthService } from './auth.service';
 
+function anyMatcher<T>(constructor: new (...args: never[]) => T): T {
+  const matcher: unknown = expect.any(constructor);
+  return matcher as T;
+}
+
 jest.mock('bcrypt', () => ({
   compare: jest.fn(),
 }));
@@ -57,7 +62,7 @@ describe('AuthService', () => {
     });
     expect(prisma.user.update).toHaveBeenCalledWith({
       where: { id: 1 },
-      data: { lastLoginAt: expect.any(Date) },
+      data: { lastLoginAt: anyMatcher(Date) },
     });
   });
 

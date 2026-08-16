@@ -40,6 +40,18 @@ npm --prefix frontend run build
 
 `test` ejecuta toda la suite una vez. `test:watch` mantiene Vitest activo durante el desarrollo.
 
+## Docker local
+
+El frontend forma parte del stack definido en la raiz. Desde la raiz, configurar `.env` y ejecutar:
+
+```powershell
+Copy-Item .env.example .env
+docker compose build frontend
+docker compose up -d frontend
+```
+
+La aplicacion queda disponible en `http://localhost:5173` y recibe `VITE_API_URL` desde la configuracion del stack. El navegador usa el origen publicado del backend, no el nombre interno del servicio Compose.
+
 ## Estructura
 
 - `src/app`: composición, rutas, layouts y límites de autorización.

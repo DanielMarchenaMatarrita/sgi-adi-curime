@@ -66,7 +66,16 @@ describe('UsersService', () => {
     expect(prisma.user.findMany).toHaveBeenCalledWith(
       expect.objectContaining({ skip: 5, take: 5 }),
     );
-    const query = prisma.user.findMany.mock.calls[0][0];
+    const query = (
+      prisma.user.findMany.mock.calls as unknown as Array<
+        [
+          {
+            where: { status: UserStatus; roleId: number };
+            select: { passwordHash?: unknown };
+          },
+        ]
+      >
+    )[0][0];
     expect(query.where).toEqual(
       expect.objectContaining({ status: UserStatus.ACTIVE, roleId: 2 }),
     );
