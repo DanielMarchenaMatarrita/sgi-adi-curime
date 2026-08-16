@@ -71,7 +71,21 @@ La base de datos PostgreSQL será utilizada por el backend mediante Prisma.
 
 ## Desarrollo local
 
-El repositorio contiene dos aplicaciones npm independientes, cada una con su propio `package.json` y lockfile. Ejecuta los comandos desde la raiz:
+El repositorio contiene dos aplicaciones npm independientes, cada una con su propio `package.json` y lockfile. Para ejecutar el stack completo en contenedores:
+
+```powershell
+Copy-Item .env.example .env
+docker compose build
+docker compose up -d
+docker compose ps
+docker compose exec backend npm run db:migrate:deploy
+docker compose logs -f
+docker compose down
+```
+
+El stack publica el frontend en `http://localhost:5173`, el backend en `http://localhost:3000` y PostgreSQL en el puerto `5432`. La primera inicializacion de una base vacia aplica las migraciones de forma explicita; el arranque normal no elimina datos ni ejecuta operaciones destructivas. `docker compose down -v` elimina el volumen local de PostgreSQL y solo debe usarse cuando se confirme esa perdida de datos.
+
+Para trabajar sin contenedores, los comandos de cada aplicacion siguen disponibles desde la raiz:
 
 ```powershell
 npm --prefix frontend ci
@@ -83,13 +97,14 @@ npm --prefix frontend run build
 npm --prefix backend ci
 npm --prefix backend run start:dev
 npm --prefix backend test
+npm --prefix backend run test:e2e
 npm --prefix backend run lint
 npm --prefix backend run build
 ```
 
-Node.js `v24.18.0` y npm `11.16.0` fueron usados para la verificacion actual. El proyecto no incluye aun un archivo de version como `.nvmrc`. Docker, CI y la infraestructura local reproducible son fases posteriores y no deben considerarse disponibles por este documento.
+Node.js `v24.18.0` y npm `11.16.0` fueron usados para la verificacion actual y Node.js esta declarado en `.nvmrc`. La configuracion del stack se documenta en `.env.example`; no se deben versionar archivos `.env` poblados.
 
-Los valores locales se configuran en `frontend/.env.local` y `backend/.env`; los archivos `.env.example` son contratos sin secretos.
+La integracion continua esta definida en `.github/workflows/ci.yml` y ejecuta las verificaciones de frontend y backend contra PostgreSQL.
 
 ## Documentacion del avance
 

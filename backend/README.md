@@ -26,6 +26,21 @@ ACTIVATION_TOKEN_TTL_HOURS=24
 
 `CORS_ORIGINS` debe contener origenes HTTP(S) exactos y separados por coma cuando se necesiten varios. `JWT_SECRET`, contrasenas y credenciales de base de datos son valores locales y no deben versionarse.
 
+## Docker local
+
+Desde la raiz del repositorio, crear el archivo `.env` a partir de `.env.example` y completar los valores requeridos. Luego iniciar el stack:
+
+```powershell
+Copy-Item .env.example .env
+docker compose build
+docker compose up -d
+docker compose exec backend npm run db:migrate:deploy
+docker compose logs -f backend
+docker compose down
+```
+
+Dentro de Compose, el backend usa PostgreSQL mediante el host `postgres`; el navegador usa `VITE_API_URL=http://localhost:3000`. PostgreSQL conserva los datos en un volumen nombrado. `docker compose down -v` es destructivo para ese volumen y no forma parte del flujo normal.
+
 ## Comandos
 
 Ejecutar desde la raiz del repositorio:
@@ -37,10 +52,11 @@ npm --prefix backend run build
 npm --prefix backend run lint
 npm --prefix backend test
 npm --prefix backend run test:e2e
+npm --prefix backend run db:migrate:deploy
 npm --prefix backend run db:seed
 ```
 
-`lint` usa ESLint con `--fix`, por lo que se debe revisar el diff despues de ejecutarlo. `db:seed` modifica la base de datos configurada y requiere todos los valores del administrador inicial.
+`lint` usa ESLint con `--fix`, por lo que se debe revisar el diff despues de ejecutarlo. `db:migrate:deploy` aplica solo migraciones versionadas. `db:seed` modifica la base de datos configurada y requiere todos los valores del administrador inicial.
 
 ## Estructura actual
 
@@ -63,4 +79,4 @@ npm --prefix backend run lint
 
 Las pruebas unitarias actuales cubren autenticacion, usuarios, solicitudes de usuario, configuracion CORS y el controlador principal. La cobertura de PostgreSQL depende de una base configurada y no se sustituye por valores de ejemplo.
 
-En la verificacion de la fundacion, las 47 pruebas y el build pasan. ESLint reporta actualmente 25 errores existentes de tipado inseguro y un parametro no utilizado; corregirlos corresponde a un cambio de calidad separado y no se desactivan las reglas para ocultarlos.
+En la verificacion de la fundacion, las 47 pruebas, el build y ESLint pasan. La integracion continua repite estas verificaciones con PostgreSQL disponible.
